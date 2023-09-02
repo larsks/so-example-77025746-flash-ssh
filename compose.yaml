@@ -1,0 +1,19 @@
+services:
+  config-fetcher:
+    image: flaskapp
+    build:
+      context: .
+      dockerfile: ./Containerfile
+    user: root
+    ports:
+      - "5000:5000"
+
+    # Expose the "sshkey" secret as /run/secrets/sshkey
+    secrets:
+      - sshkey
+
+# Create a secret named "sshkey" that will have the content
+# of ~/.ssh/id_rsa
+secrets:
+  sshkey:
+    file: ~/.ssh/id_rsa
